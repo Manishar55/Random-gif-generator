@@ -9,11 +9,12 @@ export default function Tag() {
 
   const [gif , setGif]=useState('');
   const [loading, setLoading]= useState(false);
+  const [tag, setTag]=useState('car');
   
 
   async function fetchData() {
     setLoading(true);
-    const url = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}`;
+    const url = `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=${tag}`;
     const {data} = await axios.get(url);
     // console.log(output);
     const imageSource=data.data.images.downsized_large.url;
@@ -30,8 +31,8 @@ export default function Tag() {
     fetchData();
   }
 
-  function changeHandler(){
-    
+  function changeHandler(event){
+    setTag(event.target.value);
   }
   return(
     <div className="w-1/2  bg-blue-400 rounded-lg border border-black flex flex-col gap-y-5 mt-[15px] items-center">
@@ -42,7 +43,8 @@ export default function Tag() {
       }
 
       <input className="w-10/12 text-lg py-3 rounded-xl text-center"
-      onChange={changeHandler}></input>
+      onChange={changeHandler}
+      value={tag}></input>
       <button className="w-10/12 bg-green-100 py-2 px-10 rounded-xl text-2xl font-bold mb-[20px]" onClick={clickHandler}>Genrerate</button>
     </div>
   )
